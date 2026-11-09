@@ -9,7 +9,7 @@ import assignment
 
 
 @pytest.fixture
-def q():
+def s():
     return importlib.reload(assignment)
 
 
@@ -30,149 +30,144 @@ def check_no_list_methods(function):
         if name in [".append", ".pop", ".insert", ".remove", ".extend", ".clear"]:
             pytest.fail(
                 function.__name__ + "() uses " + name + "(). "
-                "Move the pointers yourself and store with Queue[TailPointer] = ..."
+                "Change TopOfStack and use Stack[TopOfStack] instead."
             )
 
 
-def empty_the_queue(q):
-    items = []
-    for x in range(q.NumberItems):
-        items.append(q.Dequeue())
-    return items
+def test1_initial_stack(s):
+    assert s.Stack == [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+    assert s.TopOfStack == -1
 
 
-def test1_initial_queue(q):
-    assert q.Queue == [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
-    assert q.HeadPointer == -1
-    assert q.TailPointer == -1
-    assert q.NumberItems == 0
+def test1_is_empty(s):
+    assert s.IsEmpty() == True
+    s.TopOfStack = 0
+    assert s.IsEmpty() == False
+    s.TopOfStack = 5
+    assert s.IsEmpty() == False
+    s.TopOfStack = -1
+    assert s.IsEmpty() == True
 
 
-def test1_enqueue(q):
-    assert q.Enqueue(15) == True
-    assert q.HeadPointer == 0
-    assert q.TailPointer == 0
-    assert q.NumberItems == 1
-    assert q.Queue[0] == 15
-    assert q.Enqueue(27) == True
-    assert q.TailPointer == 1
-    assert q.NumberItems == 2
+def test1_is_full(s):
+    assert s.IsFull() == False
+    s.TopOfStack = 4
+    assert s.IsFull() == False
+    s.TopOfStack = 9
+    assert s.IsFull() == True
 
 
-def test1_enqueue_when_full(q):
+def test2_push(s):
+    assert s.Push(15) == True
+    assert s.TopOfStack == 0
+    assert s.Stack[0] == 15
+    assert s.Push(27) == True
+    assert s.TopOfStack == 1
+    assert s.Stack[1] == 27
+    assert s.Stack[0] == 15
+
+
+def test2_push_when_full(s):
     for x in range(10):
-        assert q.Enqueue(x) == True
-    assert q.Enqueue(99) == False
-    assert q.NumberItems == 10
-    assert q.Queue == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        assert s.Push(x) == True
+    assert s.Push(99) == False
+    assert s.TopOfStack == 9
+    assert s.Stack == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 
-def test1_dequeue(q):
-    q.Enqueue(10)
-    q.Enqueue(20)
-    q.Enqueue(30)
-    assert q.Dequeue() == 10
-    assert q.HeadPointer == 1
-    assert q.NumberItems == 2
-    assert q.Dequeue() == 20
-    assert q.Dequeue() == 30
+def test2_uses_top_of_stack(s):
+    check_no_list_methods(s.Push)
+    for x in range(12):
+        s.Push(x)
+    assert len(s.Stack) == 10
+    assert s.TopOfStack == 9
 
 
-def test1_dequeue_when_empty(q):
-    assert q.Dequeue() == -999
-    q.Enqueue(-1)
-    assert q.Dequeue() == -1
-    assert q.NumberItems == 0
-    assert q.HeadPointer == -1
-    assert q.TailPointer == -1
-    assert q.Dequeue() == -999
+def test3_pop(s):
+    s.Stack[0] = 10
+    s.Stack[1] = 20
+    s.Stack[2] = 30
+    s.TopOfStack = 2
+    assert s.Pop() == 30
+    assert s.TopOfStack == 1
+    assert s.Pop() == 20
+    assert s.TopOfStack == 0
+    assert s.Pop() == 10
+    assert s.TopOfStack == -1
 
 
-def test1_wraps_around(q):
-    for x in range(10):
-        q.Enqueue(x)
-    q.Dequeue()
-    q.Dequeue()
-    q.Dequeue()
-    assert q.Enqueue(10) == True
-    assert q.TailPointer == 0
-    assert q.Queue[0] == 10
-    assert q.Enqueue(11) == True
-    assert q.Enqueue(12) == True
-    assert q.TailPointer == 2
-    assert q.Enqueue(13) == False
-    assert empty_the_queue(q) == [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+def test3_pop_when_empty(s):
+    assert s.Pop() == -1
+    assert s.TopOfStack == -1
+    s.Stack[0] = 7
+    s.TopOfStack = 0
+    s.Pop()
+    assert s.Pop() == -1
+    assert s.TopOfStack == -1
 
 
-def test1_uses_pointers(q):
-    check_no_list_methods(q.Enqueue)
-    check_no_list_methods(q.Dequeue)
-    for x in range(25):
-        q.Enqueue(x)
-        q.Dequeue()
-    assert len(q.Queue) == 10
+def test3_uses_top_of_stack(s):
+    check_no_list_methods(s.Pop)
+    s.Stack[0] = 4
+    s.Stack[1] = 6
+    s.TopOfStack = 1
+    assert s.Pop() == 6
+    assert s.Pop() == 4
+    assert s.Pop() == -1
+    assert len(s.Stack) == 10
 
 
-@pytest.mark.parametrize("content, expected_count, expected_items", [
-    ["5\n10\n15\n", 3, [5, 10, 15]],
-    ["7\n\n-3\n\n", 2, [7, -3]],
-    ["42", 1, [42]],
-    ["", 0, []],
+def test4_peek(s):
+    assert s.Peek() == -1
+    s.Stack[0] = 8
+    s.Stack[1] = 3
+    s.TopOfStack = 1
+    assert s.Peek() == 3
+    assert s.Peek() == 3
+    assert s.TopOfStack == 1
+    s.TopOfStack = 0
+    assert s.Peek() == 8
+
+
+def test4_size(s):
+    assert s.Size() == 0
+    s.TopOfStack = 0
+    assert s.Size() == 1
+    s.TopOfStack = 4
+    assert s.Size() == 5
+    s.TopOfStack = 9
+    assert s.Size() == 10
+
+
+@pytest.mark.parametrize("word, expected", [
+    ["HELLO", "OLLEH"],
+    ["abc", "cba"],
+    ["Python", "nohtyP"],
+    ["Mongolia", "ailognoM"],
+    ["racecar", "racecar"],
+    ["a", "a"],
+    ["", ""],
 ])
-def test2_load_queue(q, tmp_path, content, expected_count, expected_items):
-    path = tmp_path / "numbers.txt"
-    path.write_text(content)
-    assert q.LoadQueue(path) == expected_count
-    assert q.NumberItems == expected_count
-    assert empty_the_queue(q) == expected_items
+def test5_reverse_word(s, word, expected):
+    assert s.ReverseWord(word) == expected
 
 
-def test2_load_when_full(q, tmp_path, capsys):
-    path = tmp_path / "numbers.txt"
-    path.write_text("1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n")
-    assert q.LoadQueue(path) == 10
-    assert capsys.readouterr().out.count("Queue full") == 1
-    assert empty_the_queue(q) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+def test5_starts_with_empty_stack(s):
+    s.Push("x")
+    s.Push("y")
+    assert s.ReverseWord("cat") == "tac"
+    assert s.TopOfStack == -1
 
 
-def test2_adds_to_back(q, tmp_path):
-    q.Enqueue(100)
-    path = tmp_path / "numbers.txt"
-    path.write_text("1\n2\n3\n")
-    assert q.LoadQueue(path) == 3
-    assert empty_the_queue(q) == [100, 1, 2, 3]
-
-
-@pytest.mark.parametrize("items, expected_removed, expected_items", [
-    [[5, -2, 7, -1, 3], 2, [5, 7, 3]],
-    [[1, 2, 3], 0, [1, 2, 3]],
-    [[-5, 0, -6], 2, [0]],
-    [[], 0, []],
-])
-def test3_remove_negatives(q, items, expected_removed, expected_items):
-    for item in items:
-        q.Enqueue(item)
-    assert q.RemoveNegatives() == expected_removed
-    assert q.NumberItems == len(expected_items)
-    assert empty_the_queue(q) == expected_items
-
-
-def test3_after_wrap_around(q):
-    for x in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:
-        q.Enqueue(x)
-    for x in range(6):
-        q.Dequeue()
-    for x in [-11, 12, -13, 14]:
-        q.Enqueue(x)
-    assert q.RemoveNegatives() == 2
-    assert empty_the_queue(q) == [7, 8, 9, 10, 12, 14]
-
-
-def test3_all_negative(q):
-    for x in [-1, -2, -3]:
-        q.Enqueue(x)
-    assert q.RemoveNegatives() == 3
-    assert q.NumberItems == 0
-    assert q.HeadPointer == -1
-    assert q.TailPointer == -1
-    assert q.Dequeue() == -999
+def test5_uses_the_stack(s):
+    names = calls_in(s.ReverseWord)
+    assert "Push" in names, "ReverseWord() must call Push()."
+    assert "Pop" in names, "ReverseWord() must call Pop()."
+    for banned in ["reversed", ".reverse"]:
+        if banned in names:
+            pytest.fail("ReverseWord() uses " + banned + "(). Use the stack instead.")
+    tree = ast.parse(textwrap.dedent(inspect.getsource(s.ReverseWord)))
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Slice) and node.step is not None:
+            pytest.fail("ReverseWord() uses [::-1]. Use the stack instead.")
+    assert s.ReverseWord("dog") == "god"
