@@ -28,138 +28,148 @@ jobs:
       - name: Install pytest
         run: pip install -r requirements.txt
 
-      - name: Ex 1 - Queue set up
-        id: ex1_initial_queue
+      - name: Ex 1 - Stack set up
+        id: ex1_initial_stack
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 1 - Queue set up
-          command: pytest test_assignment.py::test1_initial_queue
+          test-name: Ex 1 - Stack set up
+          command: pytest test_assignment.py::test1_initial_stack
           timeout: 2
           max-score: 1
 
-      - name: Ex 1 - Enqueue
-        id: ex1_enqueue
+      - name: Ex 1 - IsEmpty
+        id: ex1_is_empty
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 1 - Enqueue
-          command: pytest test_assignment.py::test1_enqueue
+          test-name: Ex 1 - IsEmpty
+          command: pytest test_assignment.py::test1_is_empty
           timeout: 2
           max-score: 1
 
-      - name: Ex 1 - Enqueue when full
-        id: ex1_enqueue_when_full
+      - name: Ex 1 - IsFull
+        id: ex1_is_full
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 1 - Enqueue when full
-          command: pytest test_assignment.py::test1_enqueue_when_full
+          test-name: Ex 1 - IsFull
+          command: pytest test_assignment.py::test1_is_full
           timeout: 2
           max-score: 1
 
-      - name: Ex 1 - Dequeue
-        id: ex1_dequeue
+      - name: Ex 2 - Push
+        id: ex2_push
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 1 - Dequeue
-          command: pytest test_assignment.py::test1_dequeue
+          test-name: Ex 2 - Push
+          command: pytest test_assignment.py::test2_push
           timeout: 2
           max-score: 1
 
-      - name: Ex 1 - Dequeue when empty
-        id: ex1_dequeue_when_empty
+      - name: Ex 2 - Push when full
+        id: ex2_push_when_full
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 1 - Dequeue when empty
-          command: pytest test_assignment.py::test1_dequeue_when_empty
+          test-name: Ex 2 - Push when full
+          command: pytest test_assignment.py::test2_push_when_full
           timeout: 2
           max-score: 1
 
-      - name: Ex 1 - Wraps around
-        id: ex1_wraps_around
+      - name: Ex 2 - Uses TopOfStack
+        id: ex2_uses_top_of_stack
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 1 - Wraps around
-          command: pytest test_assignment.py::test1_wraps_around
+          test-name: Ex 2 - Uses TopOfStack
+          command: pytest test_assignment.py::test2_uses_top_of_stack
           timeout: 2
           max-score: 1
 
-      - name: Ex 1 - Uses pointers
-        id: ex1_uses_pointers
+      - name: Ex 3 - Pop
+        id: ex3_pop
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 1 - Uses pointers
-          command: pytest test_assignment.py::test1_uses_pointers
+          test-name: Ex 3 - Pop
+          command: pytest test_assignment.py::test3_pop
           timeout: 2
           max-score: 1
 
-      - name: Ex 2 - Load queue
-        id: ex2_load_queue
+      - name: Ex 3 - Pop when empty
+        id: ex3_pop_when_empty
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 2 - Load queue
-          command: pytest test_assignment.py::test2_load_queue
+          test-name: Ex 3 - Pop when empty
+          command: pytest test_assignment.py::test3_pop_when_empty
           timeout: 2
           max-score: 1
 
-      - name: Ex 2 - Load when full
-        id: ex2_load_when_full
+      - name: Ex 3 - Uses TopOfStack
+        id: ex3_uses_top_of_stack
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 2 - Load when full
-          command: pytest test_assignment.py::test2_load_when_full
+          test-name: Ex 3 - Uses TopOfStack
+          command: pytest test_assignment.py::test3_uses_top_of_stack
           timeout: 2
           max-score: 1
 
-      - name: Ex 2 - Adds to back
-        id: ex2_adds_to_back
+      - name: Ex 4 - Peek
+        id: ex4_peek
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 2 - Adds to back
-          command: pytest test_assignment.py::test2_adds_to_back
+          test-name: Ex 4 - Peek
+          command: pytest test_assignment.py::test4_peek
           timeout: 2
           max-score: 1
 
-      - name: Ex 3 - Remove negatives
-        id: ex3_remove_negatives
+      - name: Ex 4 - Size
+        id: ex4_size
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 3 - Remove negatives
-          command: pytest test_assignment.py::test3_remove_negatives
+          test-name: Ex 4 - Size
+          command: pytest test_assignment.py::test4_size
           timeout: 2
           max-score: 1
 
-      - name: Ex 3 - After wrap around
-        id: ex3_after_wrap_around
+      - name: Ex 5 - Reverse word
+        id: ex5_reverse_word
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 3 - After wrap around
-          command: pytest test_assignment.py::test3_after_wrap_around
+          test-name: Ex 5 - Reverse word
+          command: pytest test_assignment.py::test5_reverse_word
           timeout: 2
           max-score: 1
 
-      - name: Ex 3 - All negative
-        id: ex3_all_negative
+      - name: Ex 5 - Starts with empty stack
+        id: ex5_starts_with_empty_stack
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 3 - All negative
-          command: pytest test_assignment.py::test3_all_negative
+          test-name: Ex 5 - Starts with empty stack
+          command: pytest test_assignment.py::test5_starts_with_empty_stack
+          timeout: 2
+          max-score: 1
+
+      - name: Ex 5 - Uses the stack
+        id: ex5_uses_the_stack
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Ex 5 - Uses the stack
+          command: pytest test_assignment.py::test5_uses_the_stack
           timeout: 2
           max-score: 1
 
       - name: Autograding Reporter
         uses: classroom-resources/autograding-grading-reporter@v1
         env:
-          EX1_INITIAL_QUEUE_RESULTS: "${{ steps.ex1_initial_queue.outputs.result }}"
-          EX1_ENQUEUE_RESULTS: "${{ steps.ex1_enqueue.outputs.result }}"
-          EX1_ENQUEUE_WHEN_FULL_RESULTS: "${{ steps.ex1_enqueue_when_full.outputs.result }}"
-          EX1_DEQUEUE_RESULTS: "${{ steps.ex1_dequeue.outputs.result }}"
-          EX1_DEQUEUE_WHEN_EMPTY_RESULTS: "${{ steps.ex1_dequeue_when_empty.outputs.result }}"
-          EX1_WRAPS_AROUND_RESULTS: "${{ steps.ex1_wraps_around.outputs.result }}"
-          EX1_USES_POINTERS_RESULTS: "${{ steps.ex1_uses_pointers.outputs.result }}"
-          EX2_LOAD_QUEUE_RESULTS: "${{ steps.ex2_load_queue.outputs.result }}"
-          EX2_LOAD_WHEN_FULL_RESULTS: "${{ steps.ex2_load_when_full.outputs.result }}"
-          EX2_ADDS_TO_BACK_RESULTS: "${{ steps.ex2_adds_to_back.outputs.result }}"
-          EX3_REMOVE_NEGATIVES_RESULTS: "${{ steps.ex3_remove_negatives.outputs.result }}"
-          EX3_AFTER_WRAP_AROUND_RESULTS: "${{ steps.ex3_after_wrap_around.outputs.result }}"
-          EX3_ALL_NEGATIVE_RESULTS: "${{ steps.ex3_all_negative.outputs.result }}"
+          EX1_INITIAL_STACK_RESULTS: "${{ steps.ex1_initial_stack.outputs.result }}"
+          EX1_IS_EMPTY_RESULTS: "${{ steps.ex1_is_empty.outputs.result }}"
+          EX1_IS_FULL_RESULTS: "${{ steps.ex1_is_full.outputs.result }}"
+          EX2_PUSH_RESULTS: "${{ steps.ex2_push.outputs.result }}"
+          EX2_PUSH_WHEN_FULL_RESULTS: "${{ steps.ex2_push_when_full.outputs.result }}"
+          EX2_USES_TOP_OF_STACK_RESULTS: "${{ steps.ex2_uses_top_of_stack.outputs.result }}"
+          EX3_POP_RESULTS: "${{ steps.ex3_pop.outputs.result }}"
+          EX3_POP_WHEN_EMPTY_RESULTS: "${{ steps.ex3_pop_when_empty.outputs.result }}"
+          EX3_USES_TOP_OF_STACK_RESULTS: "${{ steps.ex3_uses_top_of_stack.outputs.result }}"
+          EX4_PEEK_RESULTS: "${{ steps.ex4_peek.outputs.result }}"
+          EX4_SIZE_RESULTS: "${{ steps.ex4_size.outputs.result }}"
+          EX5_REVERSE_WORD_RESULTS: "${{ steps.ex5_reverse_word.outputs.result }}"
+          EX5_STARTS_WITH_EMPTY_STACK_RESULTS: "${{ steps.ex5_starts_with_empty_stack.outputs.result }}"
+          EX5_USES_THE_STACK_RESULTS: "${{ steps.ex5_uses_the_stack.outputs.result }}"
         with:
-          runners: ex1_initial_queue,ex1_enqueue,ex1_enqueue_when_full,ex1_dequeue,ex1_dequeue_when_empty,ex1_wraps_around,ex1_uses_pointers,ex2_load_queue,ex2_load_when_full,ex2_adds_to_back,ex3_remove_negatives,ex3_after_wrap_around,ex3_all_negative
+          runners: ex1_initial_stack,ex1_is_empty,ex1_is_full,ex2_push,ex2_push_when_full,ex2_uses_top_of_stack,ex3_pop,ex3_pop_when_empty,ex3_uses_top_of_stack,ex4_peek,ex4_size,ex5_reverse_word,ex5_starts_with_empty_stack,ex5_uses_the_stack
